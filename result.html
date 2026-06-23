@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analysis Result – Veritas AI</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/result.css">
+  <style>
+    /* Printing stylesheet styles for cleaner PDF exports */
+    @media print {
+      body { background: white !important; color: black !important; }
+      .navbar, .footer, .result-actions, #chatbot-widget, #chatbot-toggle-btn, .language-selector-wrapper { display: none !important; }
+      .page-wrapper { padding-top: 0 !important; }
+      .result-card { border: 1px solid #ddd !important; box-shadow: none !important; background: white !important; color: black !important; }
+      .text-secondary { color: #555 !important; }
+      .keyword-tag, .ner-tag { background: #f0f0f0 !important; color: black !important; border: 1px solid #ccc !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="grid-overlay"></div>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar">
+    <a href="index.html" class="nav-brand">
+      <div class="brand-icon"></div>
+      <span>Veritas AI</span>
+    </a>
+    <ul class="nav-links" id="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="analyze.html">Analyze</a></li>
+      <li><a href="dashboard.html">Dashboard</a></li>
+    </ul>
+    <div class="nav-actions" id="nav-actions">
+      <!-- Injected by app.js -->
+    </div>
+    <button class="mobile-menu-btn" id="mobile-menu-btn">&#9776;</button>
+  </nav>
+
+  <!-- Results Workspace -->
+  <main class="page-wrapper result-page">
+    <div class="container">
+      
+      <!-- Top header actions panel -->
+      <div class="flex justify-between items-center mb-8 flex-wrap gap-4 language-selector-wrapper">
+        <h2 class="text-2xl font-bold" id="page-title-trans">Prediction Result Dashboard</h2>
+        
+        <div class="flex items-center gap-3">
+          <label for="result-lang-select" class="text-sm text-secondary font-medium">Translate Dashboard:</label>
+          <select id="result-lang-select" class="form-select" style="max-width: 180px;">
+            <option value="en">English (Default)</option>
+            <option value="ta">Tamil (தமிழ்)</option>
+            <option value="hi">Hindi (हिन्दी)</option>
+            <option value="te">Telugu (తెలుగు)</option>
+            <option value="ml">Malayalam (മലയാളം)</option>
+            <option value="kn">Kannada (ಕನ್ನಡ)</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Verdict Hero Panel -->
+      <div class="card-glass verdict-hero animate-fade-in-down">
+        <div id="verdict-hero-badge" class="verdict-badge">
+          <!-- Injected by js -->
+        </div>
+        <h1 id="verdict-hero-sublabel">Checking News Authenticity...</h1>
+        
+        <!-- Circular confidence gauge -->
+        <div class="confidence-gauge">
+          <div class="gauge-container">
+            <canvas id="gauge-canvas" width="200" height="200" class="gauge-canvas"></canvas>
+            <div class="gauge-value">
+              <div class="percentage" id="gauge-number">0.0%</div>
+              <div class="label" id="trans-confidence-label">Model Confidence</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Grid Cards of AI Analytics -->
+      <div class="result-grid">
+        
+        <!-- 1. Explainable AI Cards -->
+        <div class="result-card" style="animation-delay: 0.1s;">
+          <div class="result-card-header">
+            <div class="card-icon" style="background: rgba(6,182,212,0.15); color: var(--accent-400);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9.5 2A2.5 2.5 0 0 1 12 4.5v15a2.5 2.5 0 0 1-4.96-.46 2.5 2.5 0 0 1-2.96-3.08 3 3 0 0 1-.34-5.58 2.5 2.5 0 0 1 1.32-4.24 2.5 2.5 0 0 1 4.44-1.14z"/><path d="M14.5 2A2.5 2.5 0 0 0 12 4.5v15a2.5 2.5 0 0 0 4.96-.46 2.5 2.5 0 0 0 2.96-3.08 3 3 0 0 0 .34-5.58 2.5 2.5 0 0 0-1.32-4.24 2.5 2.5 0 0 0-4.44-1.14z"/></svg>
+            </div>
+            <h3 id="trans-xai-title">Explainable AI (XAI) Reasons</h3>
+          </div>
+          <div class="xai-reasons" id="xai-reasons-list">
+            <!-- Filled by result.js -->
+          </div>
+        </div>
+
+        <!-- 2. Sentiment Progress Panel -->
+        <div class="result-card" style="animation-delay: 0.2s;">
+          <div class="result-card-header">
+            <div class="card-icon" style="background: rgba(139,92,246,0.15); color: #a78bfa;">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+            </div>
+            <h3 id="trans-sentiment-title">Sentiment Analysis</h3>
+          </div>
+          <div class="sentiment-bars">
+            <div class="sentiment-bar-item">
+              <div class="sentiment-bar-label">
+                <span>Positive Sentiment</span>
+                <span id="sentiment-val-pos">0%</span>
+              </div>
+              <div class="sentiment-bar-track">
+                <div class="sentiment-bar-fill positive" id="sentiment-fill-pos"></div>
+              </div>
+            </div>
+            <div class="sentiment-bar-item">
+              <div class="sentiment-bar-label">
+                <span>Neutral Sentiment</span>
+                <span id="sentiment-val-neu">0%</span>
+              </div>
+              <div class="sentiment-bar-track">
+                <div class="sentiment-bar-fill neutral" id="sentiment-fill-neu"></div>
+              </div>
+            </div>
+            <div class="sentiment-bar-item">
+              <div class="sentiment-bar-label">
+                <span>Negative Sentiment</span>
+                <span id="sentiment-val-neg">0%</span>
+              </div>
+              <div class="sentiment-bar-track">
+                <div class="sentiment-bar-fill negative" id="sentiment-fill-neg"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. Source Credibility Score -->
+        <div class="result-card" style="animation-delay: 0.3s;">
+          <div class="result-card-header">
+            <div class="card-icon" style="background: rgba(16,185,129,0.15); color: var(--success-400);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+            </div>
+            <h3 id="trans-source-title">Source Credibility</h3>
+          </div>
+          <div class="credibility-score">
+            <div class="score-ring">
+              <canvas id="credibility-canvas" width="120" height="120"></canvas>
+              <div class="score-value" id="credibility-val-text">0</div>
+            </div>
+            <div class="credibility-label" id="credibility-val-label">Verifying Domain...</div>
+          </div>
+        </div>
+
+        <!-- 4. Clickbait detector -->
+        <div class="result-card" style="animation-delay: 0.4s;">
+          <div class="result-card-header">
+            <div class="card-icon" style="background: rgba(239,68,68,0.15); color: var(--danger-400);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><line x1="12" y1="9" x2="12" y2="13"/><line x1="12" y1="17" x2="12.01" y2="17"/></svg>
+            </div>
+            <h3 id="trans-clickbait-title">Clickbait Probability</h3>
+          </div>
+          <div class="clickbait-result">
+            <div class="clickbait-value" id="clickbait-value">0%</div>
+            <div class="clickbait-meter">
+              <div class="clickbait-meter-fill" id="clickbait-fill"></div>
+            </div>
+            <p class="text-xs text-secondary mt-2">Sensational headline checks for emotive exaggerations.</p>
+          </div>
+        </div>
+
+        <!-- 5. Named Entity Tagging -->
+        <div class="result-card" style="animation-delay: 0.5s;">
+          <div class="result-card-header">
+            <div class="card-icon" style="background: rgba(245,158,11,0.15); color: var(--warning-400);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+            </div>
+            <h3 id="trans-ner-title">Named Entity Recognition</h3>
+          </div>
+          <div class="ner-section">
+            <div class="ner-category">
+              <span class="ner-category-label">Persons:</span>
+              <div class="ner-tags" id="ner-persons"></div>
+            </div>
+            <div class="ner-category">
+              <span class="ner-category-label">Organizations:</span>
+              <div class="ner-tags" id="ner-orgs"></div>
+            </div>
+            <div class="ner-category">
+              <span class="ner-category-label">Locations:</span>
+              <div class="ner-tags" id="ner-locations"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Keywords Extracted -->
+        <div class="result-card" style="animation-delay: 0.6s;">
+          <div class="result-card-header">
+            <div class="card-icon" style="background: rgba(67,97,238,0.15); color: var(--primary-400);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7V4h16v3"/><path d="M9 20h6"/><path d="M12 4v16"/></svg>
+            </div>
+            <h3 id="trans-keywords-title">Keyword Extraction</h3>
+          </div>
+          <div class="keywords-cloud" id="keywords-cloud">
+            <!-- Keywords injected here -->
+          </div>
+        </div>
+
+        <!-- 7. AI Summary Box (Full Width) -->
+        <div class="result-card result-full-width" style="animation-delay: 0.7s;">
+          <div class="result-card-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: var(--space-2);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div class="card-icon" style="background: rgba(6,182,212,0.15); color: var(--accent-400);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a10 10 0 1 0 10 10"/><path d="M12 8v4l3 3"/><path d="M16 2l4 4-4 4"/><path d="M20 6H14"/></svg>
+              </div>
+              <h3 id="trans-summary-title">AI Summary Generator</h3>
+            </div>
+            <button class="btn btn-secondary btn-sm" id="btn-save-report-inline" onclick="saveReportToDashboard()" style="font-size: 0.8rem; padding: var(--space-1-5) var(--space-3.5); display: flex; align-items: center; gap: 6px;">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              Save Article
+            </button>
+          </div>
+          <div class="ai-summary" id="summary-text-box">
+            <p>Processing article details...</p>
+          </div>
+        </div>
+
+        <!-- Fact-by-Fact Statement Verification & Article Downloader (Full Width) -->
+        <div class="result-card result-full-width" style="animation-delay: 0.75s;">
+          <div class="result-card-header" style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: var(--space-2);">
+            <div style="display: flex; align-items: center; gap: var(--space-3);">
+              <div class="card-icon" style="background: rgba(67,97,238,0.15); color: var(--primary-400);">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <h3 id="trans-claims-title">Fact-by-Fact Statement Verification</h3>
+            </div>
+            <div class="flex gap-2">
+              <button class="btn btn-secondary btn-sm" id="btn-download-article" onclick="downloadArticleTxt()" style="font-size: 0.8rem; padding: var(--space-1-5) var(--space-3.5); display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download Article (.txt)
+              </button>
+              <button class="btn btn-primary btn-sm" id="btn-download-report" onclick="downloadTruthReportMd()" style="font-size: 0.8rem; padding: var(--space-1-5) var(--space-3.5); display: flex; align-items: center; gap: 6px;">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+                Download Truth Report (.md)
+              </button>
+            </div>
+          </div>
+          
+          <div class="claims-workspace">
+            <!-- Left Side: Original Article Reader -->
+            <div class="claims-article-panel">
+              <h4 class="claims-panel-title">Original Article Content</h4>
+              <div class="claims-article-content text-secondary" id="article-content-body">
+                <!-- Injected by result.js -->
+              </div>
+            </div>
+            
+            <!-- Right Side: Statement Verification Panel -->
+            <div class="claims-statements-panel">
+              <div class="claims-panel-header">
+                <h4 class="claims-panel-title">Verified Claims Breakdown</h4>
+                <div class="claims-filter-tabs" id="claims-filter-tabs">
+                  <button class="claims-tab active" data-claim-filter="all" onclick="filterClaims('all')">All (<span id="claim-count-all">0</span>)</button>
+                  <button class="claims-tab" data-claim-filter="true" onclick="filterClaims('true')" style="color: var(--success-400);">True (<span id="claim-count-true">0</span>)</button>
+                  <button class="claims-tab" data-claim-filter="false" onclick="filterClaims('false')" style="color: var(--danger-400);">False (<span id="claim-count-false">0</span>)</button>
+                </div>
+              </div>
+              <div class="claims-list" id="claims-list-container">
+                <!-- Injected by result.js -->
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 8. Similar News feeds check (Full Width) -->
+        <div class="result-card result-full-width" style="animation-delay: 0.8s;">
+          <div class="result-card-header">
+            <div class="card-icon" style="background: rgba(16,185,129,0.15); color: var(--success-400);">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </div>
+            <h3 id="trans-related-title">Similar News Verification</h3>
+          </div>
+          <div class="related-articles" id="related-articles-list">
+            <!-- Partners list injected here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- Action Buttons footer panel -->
+      <div class="result-actions animate-fade-in delay-5">
+        <button class="btn btn-primary btn-lg" id="btn-download-pdf" onclick="downloadPdfReport()" style="display:flex;align-items:center;gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+          Download PDF Report
+        </button>
+        <button class="btn btn-secondary btn-lg" id="btn-download-csv" onclick="downloadCsvReport()" style="display:flex;align-items:center;gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18"/></svg>
+          Export CSV
+        </button>
+        <button class="btn btn-secondary btn-lg" id="btn-save-report" onclick="saveReportToDashboard()" style="display:flex;align-items:center;gap:8px;">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Save Analysis Report
+        </button>
+        <a href="analyze.html" class="btn btn-ghost btn-lg">Analyze Another Article</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/app.js"></script>
+  <script src="js/result.js"></script>
+  <script src="js/chatbot.js"></script>
+</body>
+</html>

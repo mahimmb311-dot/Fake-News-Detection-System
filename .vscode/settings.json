@@ -1,0 +1,7 @@
+{
+    "python.testing.pytestArgs": [
+        "Fake-News-Detection-System"
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true
+}

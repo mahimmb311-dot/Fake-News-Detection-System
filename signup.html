@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sign Up – Veritas AI</title>
+  <link rel="stylesheet" href="css/main.css">
+  <link rel="stylesheet" href="css/auth.css">
+</head>
+<body>
+  <div class="animated-bg"></div>
+  <div class="grid-overlay"></div>
+
+  <div class="auth-page">
+    <div class="auth-container" style="max-width: 1100px;">
+      <!-- Left Panel: Branding -->
+      <div class="auth-branding animate-fade-in">
+        <a href="index.html" class="brand-logo">
+          <div class="icon">
+            <img src="css/logo.png" alt="Veritas AI" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+          </div>
+          <span>Veritas AI</span>
+        </a>
+        <h2>Create Your Free Account</h2>
+        <p>Get instant access to advanced news analysis dashboards, entities classification trackers, and credibility metrics.</p>
+        
+        <ul class="auth-features">
+          <li>
+            <div class="check-icon">&#10003;</div>
+            <span>Interactive Sentiment Gauges</span>
+          </li>
+          <li>
+            <div class="check-icon">&#10003;</div>
+            <span>Named Entities Recognition Tagging</span>
+          </li>
+          <li>
+            <div class="check-icon">&#10003;</div>
+            <span>Personal Dashboard with History Tracking</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- Right Panel: Form -->
+      <div class="auth-form-panel animate-scale-in" style="padding: var(--space-8) var(--space-10);">
+        <h1>Get Started</h1>
+        <p class="subtitle">Join Veritas AI for advanced NLP news verification</p>
+
+        <form class="auth-form" id="signup-form">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="signup-fullname">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Full Name
+              </label>
+              <input type="text" id="signup-fullname" class="form-input" placeholder="e.g. John Doe" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="signup-username">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                Username
+              </label>
+              <input type="text" id="signup-username" class="form-input" placeholder="e.g. johndoe" required>
+            </div>
+          </div>
+
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="signup-email">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+                Email Address
+              </label>
+              <input type="email" id="signup-email" class="form-input" placeholder="e.g. name@domain.com" required>
+            </div>
+            
+            <div class="form-group">
+              <label class="form-label" for="signup-mobile">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+                Mobile Number
+              </label>
+              <input type="tel" id="signup-mobile" class="form-input" placeholder="e.g. +1 (555) 000-0000" required>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-password">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Password
+            </label>
+            <div class="password-wrapper">
+              <input type="password" id="signup-password" class="form-input" placeholder="Min. 6 characters" required style="padding-right: var(--space-10);">
+              <button type="button" class="password-toggle" id="signup-password-toggle" onclick="togglePasswordVisibility('signup-password', 'signup-password-toggle')">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+            <div class="password-strength">
+              <div class="strength-bar"></div>
+              <div class="strength-bar"></div>
+              <div class="strength-bar"></div>
+              <div class="strength-bar"></div>
+            </div>
+            <div id="strength-text" class="strength-text">Enter password</div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="signup-confirm">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              Confirm Password
+            </label>
+            <input type="password" id="signup-confirm" class="form-input" placeholder="Re-enter password" required>
+          </div>
+
+          <button type="submit" class="btn btn-primary w-full">Create Account &rarr;</button>
+        </form>
+
+        <div class="auth-divider">
+          <span>or</span>
+        </div>
+
+        <button class="social-btn" onclick="googleLoginMock()">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+          Sign Up with Google
+        </button>
+
+        <p class="auth-link">
+          Already have an account? <a href="login.html">Login here</a>
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script src="js/app.js"></script>
+  <script src="js/auth.js"></script>
+</body>
+</html>
